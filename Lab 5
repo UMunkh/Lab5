@@ -1,0 +1,26 @@
+module ALU(
+       input [31:0]A,
+       input [31:0]B,
+       input [3:0]AluOp,
+       output reg [31:0]Result,
+       output ZeroFlag
+    );
+    reg [31:0] t;
+    reg t2;
+    always @(*) 
+    
+    case(AluOp)
+    4'b0000: Result = A+B;
+    4'b0010: Result = A-B;
+    4'b0100: Result = A & B;
+    4'b0101: Result = A | B;
+    4'b0110: Result = A ^ B;
+    4'b0111: Result = ~(A | B);
+    4'b1010: begin
+           t = (A-B);
+           t2 = t[31];
+          Result = {31'b0, t2};
+    end
+    endcase
+    assign ZeroFlag = Result == 32'b0 ? 1 : 0;
+endmodule
